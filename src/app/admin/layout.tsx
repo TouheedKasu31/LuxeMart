@@ -16,12 +16,14 @@ import {
   ShieldCheck,
   Store,
 } from "lucide-react";
+import { useSettings } from "@/lib/settings-context";
 
 export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { store_name } = useSettings();
   const pathname = usePathname();
   const router = useRouter();
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -87,7 +89,7 @@ export default function AdminLayout({
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
                 <span className="text-white font-bold text-sm tracking-wider uppercase">
-                  Maison Console
+                  {store_name || "LuxeMart"} Console
                 </span>
               </div>
               <span className="text-[10px] text-neutral-500 uppercase tracking-widest block mt-0.5">
@@ -159,7 +161,7 @@ export default function AdminLayout({
         <header className="hidden lg:flex items-center justify-between bg-white border-b border-neutral-200 px-8 py-4 flex-shrink-0">
           <div className="flex items-center gap-3">
             <h2 className="text-sm font-bold text-neutral-900 uppercase tracking-wider">
-              Management Portal
+              {store_name || "LuxeMart"} Portal
             </h2>
           </div>
 

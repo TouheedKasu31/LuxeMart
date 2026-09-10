@@ -11,6 +11,8 @@ import {
   Store,
   Info,
   ExternalLink,
+  Lock,
+  ShieldCheck,
 } from "lucide-react";
 
 export default function AdminSettingsPage() {
@@ -19,15 +21,63 @@ export default function AdminSettingsPage() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
 
+  // Change password state
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [pwdLoading, setPwdLoading] = useState(false);
+  const [pwdSuccess, setPwdSuccess] = useState("");
+  const [pwdError, setPwdError] = useState("");
+
   const [settings, setSettings] = useState({
     store_name: "LuxeMart",
-    store_tagline: "Timeless Haute Couture & Modern Luxury",
+    store_tagline: "Quality Clothing & Direct WhatsApp Shopping",
     whatsapp_number: "918451812014",
     currency_symbol: "₹",
     greeting_template: "Assalamualaikum, I would like to place an order for the following item:",
     meta_phone_id: "",
     meta_access_token: "",
   });
+
+  const handlePasswordChange = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setPwdLoading(true);
+    setPwdSuccess("");
+    setPwdError("");
+
+    if (newPassword !== confirmPassword) {
+      setPwdError("New password and confirm password do not match");
+      setPwdLoading(false);
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      setPwdError("New password must be at least 6 characters");
+      setPwdLoading(false);
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/auth/change-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ currentPassword, newPassword }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to update password");
+
+      setPwdSuccess("Admin password changed successfully!");
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+      setTimeout(() => setPwdSuccess(""), 4000);
+    } catch (err: any) {
+      setPwdError(err.message || "Failed to update password");
+    } finally {
+      setPwdLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetch("/api/settings")
@@ -265,6 +315,102 @@ export default function AdminSettingsPage() {
           </button>
         </div>
       </form>
+
+      {/* Admin Account Security & Password Change */}
+      <div className="bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm space-y-5">
+        <div className="flex items-center gap-2 border-b border-neutral-100 pb-3">
+          <ShieldCheck className="w-4 h-4 text-neutral-900" />
+          <h2 className="text-sm font-bold uppercase tracking-wider text-black">
+            Admin Account Security & Password
+          </h2>
+        </div>
+
+        <p className="text-xs text-neutral-500">
+          Update your administrator password to keep your store management console safe and protected.
+        </p>
+
+        {pwdError && (
+          <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-700 flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 flex-shrink-0" />
+            <span>{pwdError}</span>
+          </div>
+        )}
+
+        {pwdSuccess && (
+          <div className="p-3.5 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-800 flex items-center gap-2">
+            <Check className="w-4 h-4 text-emerald-600" />
+            <span>{pwdSuccess}</span>
+          </div>
+        )}
+
+        <form onSubmit={handlePasswordChange} className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
+                Current Password *
+              </label>
+              <div className="relative">
+                <Lock className="w-3.5 h-3.5 absolute left-3 top-3 text-neutral-400" />
+                <input
+                  type="password"
+                  required
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  placeholder="Enter current password"
+                  className="w-full pl-9 pr-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-black"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
+                New Password *
+              </label>
+              <div className="relative">
+                <Lock className="w-3.5 h-3.5 absolute left-3 top-3 text-neutral-400" />
+                <input
+                  type="password"
+                  required
+                  minLength={6}
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="Min 6 characters"
+                  className="w-full pl-9 pr-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-black"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
+                Confirm New Password *
+              </label>
+              <div className="relative">
+                <Lock className="w-3.5 h-3.5 absolute left-3 top-3 text-neutral-400" />
+                <input
+                  type="password"
+                  required
+                  minLength={6}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="Confirm new password"
+                  className="w-full pl-9 pr-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-black"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="flex justify-end pt-2">
+            <button
+              type="submit"
+              disabled={pwdLoading}
+              className="inline-flex items-center gap-2 px-6 py-2.5 bg-neutral-900 hover:bg-black text-white rounded-xl text-xs font-bold tracking-wider uppercase transition-all shadow-sm active:scale-95 disabled:opacity-50"
+            >
+              <Lock className="w-3.5 h-3.5" />
+              <span>{pwdLoading ? "Updating..." : "Update Password"}</span>
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

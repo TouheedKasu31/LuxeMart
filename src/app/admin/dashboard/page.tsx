@@ -26,6 +26,7 @@ export default async function AdminDashboardPage() {
     outOfStockProducts,
     featuredProducts,
     recentProducts,
+    storeSetting,
   ] = await Promise.all([
     prisma.product.count(),
     prisma.category.count(),
@@ -40,7 +41,10 @@ export default async function AdminDashboardPage() {
         images: { orderBy: [{ isPrimary: "desc" }, { displayOrder: "asc" }], take: 1 },
       },
     }),
+    prisma.storeSetting.findUnique({ where: { key: "store_name" } }),
   ]);
+
+  const storeName = storeSetting?.value || "LuxeMart";
 
   const cards = [
     {
@@ -86,7 +90,7 @@ export default async function AdminDashboardPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm">
         <div>
           <h1 className="text-xl sm:text-2xl font-bold text-neutral-900">
-            Welcome to Store Console
+            Welcome to {storeName} Console
           </h1>
           <p className="text-xs text-neutral-500 mt-1">
             Real-time inventory overview & product management for WhatsApp commerce.

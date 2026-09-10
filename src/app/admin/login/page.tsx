@@ -2,12 +2,14 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ShieldCheck, Lock, Mail, ArrowRight, KeyRound } from "lucide-react";
+import { ShieldCheck, Lock, Mail, ArrowRight } from "lucide-react";
+import { useSettings } from "@/lib/settings-context";
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("admin@store.com");
-  const [password, setPassword] = useState("admin123");
+  const { store_name } = useSettings();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -46,24 +48,12 @@ export default function AdminLoginPage() {
           <div className="w-12 h-12 rounded-xl bg-white text-black flex items-center justify-center mx-auto mb-3 shadow-lg">
             <ShieldCheck className="w-6 h-6" />
           </div>
-          <h1 className="text-xl font-bold text-white tracking-wide">
-            MAISON ÉLÉGANCE
+          <h1 className="text-xl font-bold text-white tracking-wide uppercase">
+            {store_name || "LuxeMart"}
           </h1>
           <p className="text-xs text-neutral-400 mt-1 uppercase tracking-widest">
-            Secured Owner & Staff Portal
+            Secured Owner Portal
           </p>
-        </div>
-
-        {/* Demo credentials hint box */}
-        <div className="bg-neutral-800/80 border border-neutral-700 rounded-xl p-3.5 mb-6 text-xs text-neutral-300">
-          <div className="flex items-center gap-2 text-emerald-400 font-semibold mb-1">
-            <KeyRound className="w-4 h-4" />
-            <span>Default Administrator Credentials:</span>
-          </div>
-          <div className="text-neutral-400 font-mono text-[11px] space-y-0.5 mt-1">
-            <p>Email: <strong className="text-neutral-200">admin@store.com</strong></p>
-            <p>Password: <strong className="text-neutral-200">admin123</strong></p>
-          </div>
         </div>
 
         {error && (
@@ -86,7 +76,7 @@ export default function AdminLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 bg-neutral-800 border border-neutral-700 rounded-xl text-white text-xs placeholder-neutral-500 focus:outline-none focus:ring-1 focus:ring-white focus:border-white"
-                placeholder="admin@store.com"
+                placeholder="admin@example.com"
               />
             </div>
           </div>
