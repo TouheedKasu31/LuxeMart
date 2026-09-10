@@ -64,6 +64,10 @@ export default function AdminSettingsPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to save settings");
 
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new Event("settings-updated"));
+      }
+
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
     } catch (err: any) {

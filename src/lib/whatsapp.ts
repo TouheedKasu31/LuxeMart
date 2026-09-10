@@ -37,7 +37,11 @@ export function buildWhatsAppOrderMessage(data: WhatsAppOrderData): string {
     message += `▪ *Colour:* ${data.colour}\n`;
   }
 
-  message += `\n🔗 *Product Link & Preview:*\n${data.productUrl}\n\n`;
+  if (data.imageUrl && data.imageUrl.trim() !== "") {
+    message += `▪ *Image:* ${data.imageUrl}\n`;
+  }
+
+  message += `\n🔗 *Product Link:*\n${data.productUrl}\n\n`;
   message += `Please confirm availability and share payment/delivery details. Thank you!`;
 
   return message;

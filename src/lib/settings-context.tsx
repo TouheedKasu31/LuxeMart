@@ -18,24 +18,45 @@ const defaultSettings: StoreSettings = {
   greeting_template: "Assalamualaikum, I would like to place an order for the following item:",
 };
 
-const SettingsContext = createContext<StoreSettings>(defaultSettings);
+interface SettingsContextType extends StoreSettings {
+  refreshSettings: () => Promise<void>;
+}
+
+const defaultContext: SettingsContextType = {
+  ...defaultSettings,
+  refreshSettings: async () => {},
+};
+
+const SettingsContext = createContext<SettingsContextType>(defaultContext);
 
 export function SettingsProvider({ children }: { children: React.ReactNode }) {
   const [settings, setSettings] = useState<StoreSettings>(defaultSettings);
 
+  const fetchSettings = async () => {
+    try {
+      const res = await fetch("/api/settings", { cache: "no-store" });
+      const data = await res.json();
+      if (data && !data.error) {
+        setSettings((prev) => ({ ...prev, ...data }));
+      }
+    } catch (e) {
+      console.error("Failed to load settings:", e);
+    }
+  };
+
   useEffect(() => {
-    fetch("/api/settings")
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && !data.error) {
-          setSettings((prev) => ({ ...prev, ...data }));
-        }
-      })
-      .catch(() => {});
+    fetchSettings();
+
+    const handleUpdate = () => {
+      fetchSettings();
+    };
+
+    window.addEventListener("settings-updated", handleUpdate);
+    return () => window.removeEventListener("settings-updated", handleUpdate);
   }, []);
 
   return (
-    <SettingsContext.Provider value={settings}>
+    <SettingsContext.Provider value={{ ...settings, refreshSettings: fetchSettings }}>
       {children}
     </SettingsContext.Provider>
   );
