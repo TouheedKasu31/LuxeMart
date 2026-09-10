@@ -13,6 +13,8 @@ import {
   ExternalLink,
   Lock,
   ShieldCheck,
+  Mail,
+  User,
 } from "lucide-react";
 
 export default function AdminSettingsPage() {
@@ -21,7 +23,9 @@ export default function AdminSettingsPage() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
 
-  // Change password state
+  // Admin Account & Password State
+  const [adminName, setAdminName] = useState("");
+  const [adminEmail, setAdminEmail] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -39,47 +43,53 @@ export default function AdminSettingsPage() {
     meta_access_token: "",
   });
 
-  const handlePasswordChange = async (e: React.FormEvent) => {
+  const handleAdminAccountSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setPwdLoading(true);
     setPwdSuccess("");
     setPwdError("");
 
-    if (newPassword !== confirmPassword) {
+    if (newPassword && newPassword !== confirmPassword) {
       setPwdError("New password and confirm password do not match");
       setPwdLoading(false);
       return;
     }
 
-    if (newPassword.length < 6) {
+    if (newPassword && newPassword.length < 6) {
       setPwdError("New password must be at least 6 characters");
       setPwdLoading(false);
       return;
     }
 
     try {
-      const res = await fetch("/api/auth/change-password", {
-        method: "POST",
+      const res = await fetch("/api/auth/profile", {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ currentPassword, newPassword }),
+        body: JSON.stringify({
+          name: adminName,
+          email: adminEmail,
+          currentPassword,
+          newPassword: newPassword || undefined,
+        }),
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to update password");
+      if (!res.ok) throw new Error(data.error || "Failed to update admin account");
 
-      setPwdSuccess("Admin password changed successfully!");
+      setPwdSuccess(data.message || "Admin username & credentials updated successfully!");
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
-      setTimeout(() => setPwdSuccess(""), 4000);
+      setTimeout(() => setPwdSuccess(""), 5000);
     } catch (err: any) {
-      setPwdError(err.message || "Failed to update password");
+      setPwdError(err.message || "Failed to update admin account");
     } finally {
       setPwdLoading(false);
     }
   };
 
   useEffect(() => {
+    // Fetch store settings
     fetch("/api/settings")
       .then((res) => res.json())
       .then((data) => {
@@ -92,6 +102,17 @@ export default function AdminSettingsPage() {
       })
       .catch(console.error)
       .finally(() => setLoading(false));
+
+    // Fetch current admin user info
+    fetch("/api/auth/me")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.user) {
+          setAdminName(data.user.name || "");
+          setAdminEmail(data.user.email || "");
+        }
+      })
+      .catch(() => {});
   }, []);
 
   const handleChange = (key: string, value: string) => {
@@ -316,17 +337,17 @@ export default function AdminSettingsPage() {
         </div>
       </form>
 
-      {/* Admin Account Security & Password Change */}
+      {/* Admin Account Security: Username, Name & Password */}
       <div className="bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm space-y-5">
         <div className="flex items-center gap-2 border-b border-neutral-100 pb-3">
           <ShieldCheck className="w-4 h-4 text-neutral-900" />
           <h2 className="text-sm font-bold uppercase tracking-wider text-black">
-            Admin Account Security & Password
+            Admin Account & Login Credentials
           </h2>
         </div>
 
         <p className="text-xs text-neutral-500">
-          Update your administrator password to keep your store management console safe and protected.
+          Manage your administrator username (login email), display name, and password. Keep these confidential.
         </p>
 
         {pwdError && (
@@ -343,20 +364,20 @@ export default function AdminSettingsPage() {
           </div>
         )}
 
-        <form onSubmit={handlePasswordChange} className="space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <form onSubmit={handleAdminAccountSubmit} className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-                Current Password *
+                Admin Username / Login Email *
               </label>
               <div className="relative">
-                <Lock className="w-3.5 h-3.5 absolute left-3 top-3 text-neutral-400" />
+                <Mail className="w-3.5 h-3.5 absolute left-3 top-3 text-neutral-400" />
                 <input
-                  type="password"
+                  type="email"
                   required
-                  value={currentPassword}
-                  onChange={(e) => setCurrentPassword(e.target.value)}
-                  placeholder="Enter current password"
+                  value={adminEmail}
+                  onChange={(e) => setAdminEmail(e.target.value)}
+                  placeholder="admin@example.com"
                   className="w-full pl-9 pr-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-black"
                 />
               </div>
@@ -364,17 +385,34 @@ export default function AdminSettingsPage() {
 
             <div>
               <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-                New Password *
+                Admin Name / Display Name
+              </label>
+              <div className="relative">
+                <User className="w-3.5 h-3.5 absolute left-3 top-3 text-neutral-400" />
+                <input
+                  type="text"
+                  value={adminName}
+                  onChange={(e) => setAdminName(e.target.value)}
+                  placeholder="Store Owner"
+                  className="w-full pl-9 pr-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-black"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-neutral-100">
+            <div>
+              <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
+                New Password <span className="text-neutral-400 font-normal">(Leave blank to keep unchanged)</span>
               </label>
               <div className="relative">
                 <Lock className="w-3.5 h-3.5 absolute left-3 top-3 text-neutral-400" />
                 <input
                   type="password"
-                  required
                   minLength={6}
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="Min 6 characters"
+                  placeholder="Enter new password (optional)"
                   className="w-full pl-9 pr-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-black"
                 />
               </div>
@@ -382,13 +420,12 @@ export default function AdminSettingsPage() {
 
             <div>
               <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-                Confirm New Password *
+                Confirm New Password
               </label>
               <div className="relative">
                 <Lock className="w-3.5 h-3.5 absolute left-3 top-3 text-neutral-400" />
                 <input
                   type="password"
-                  required
                   minLength={6}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
@@ -399,14 +436,33 @@ export default function AdminSettingsPage() {
             </div>
           </div>
 
-          <div className="flex justify-end pt-2">
+          <div className="pt-2 border-t border-neutral-100">
+            <div className="max-w-md">
+              <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
+                Current Password * <span className="text-neutral-500 font-normal text-[11px]">(Required to authorize changes)</span>
+              </label>
+              <div className="relative">
+                <Lock className="w-3.5 h-3.5 absolute left-3 top-3 text-neutral-400" />
+                <input
+                  type="password"
+                  required
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  placeholder="Enter your current password"
+                  className="w-full pl-9 pr-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-black"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="flex justify-end pt-3">
             <button
               type="submit"
               disabled={pwdLoading}
               className="inline-flex items-center gap-2 px-6 py-2.5 bg-neutral-900 hover:bg-black text-white rounded-xl text-xs font-bold tracking-wider uppercase transition-all shadow-sm active:scale-95 disabled:opacity-50"
             >
-              <Lock className="w-3.5 h-3.5" />
-              <span>{pwdLoading ? "Updating..." : "Update Password"}</span>
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>{pwdLoading ? "Saving Changes..." : "Save Admin Credentials"}</span>
             </button>
           </div>
         </form>
