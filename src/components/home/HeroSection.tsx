@@ -4,8 +4,10 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, MessageCircle, Sparkles } from "lucide-react";
+import { useSettings } from "@/lib/settings-context";
 
 export default function HeroSection() {
+  const { whatsapp_number } = useSettings();
   return (
     <section className="relative bg-white overflow-hidden border-b border-neutral-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 lg:pt-16 lg:pb-24">
@@ -38,7 +40,7 @@ export default function HeroSection() {
               </Link>
 
               <a
-                href={`https://wa.me/919876543210?text=${encodeURIComponent(
+                href={`https://wa.me/${whatsapp_number || "918451812014"}?text=${encodeURIComponent(
                   "Assalamualaikum! I'd like to consult with your stylist regarding available catalogue sizes and custom requests."
                 )}`}
                 target="_blank"

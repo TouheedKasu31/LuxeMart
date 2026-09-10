@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { X, MessageCircle, Copy, Check, Share2, ExternalLink, Info } from "lucide-react";
 import { buildWhatsAppOrderMessage, generateWhatsAppLink, WhatsAppOrderData } from "@/lib/whatsapp";
+import { useSettings } from "@/lib/settings-context";
 
 interface WhatsAppOrderModalProps {
   isOpen: boolean;
@@ -30,6 +31,7 @@ export default function WhatsAppOrderModal({
   selectedColour,
   storePhone,
 }: WhatsAppOrderModalProps) {
+  const { whatsapp_number } = useSettings();
   const [copied, setCopied] = useState(false);
   const [isSharing, setIsSharing] = useState(false);
   const [canShare, setCanShare] = useState(false);
@@ -55,7 +57,7 @@ export default function WhatsAppOrderModal({
     colour: selectedColour,
     productUrl,
     imageUrl: product.imageUrl,
-    storePhone: storePhone || "919876543210",
+    storePhone: whatsapp_number || storePhone || "918451812014",
   };
 
   const formattedMessage = buildWhatsAppOrderMessage(orderData);

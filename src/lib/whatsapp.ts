@@ -58,7 +58,7 @@ export function cleanPhoneNumber(phone: string): string {
  * Generates the official WhatsApp Click-to-Chat deep link
  */
 export function generateWhatsAppLink(data: WhatsAppOrderData): string {
-  const rawPhone = data.storePhone || process.env.NEXT_PUBLIC_DEFAULT_WHATSAPP || "919876543210";
+  const rawPhone = data.storePhone || process.env.NEXT_PUBLIC_DEFAULT_WHATSAPP || "918451812014";
   const phone = cleanPhoneNumber(rawPhone);
   const message = buildWhatsAppOrderMessage(data);
   const encodedMessage = encodeURIComponent(message);

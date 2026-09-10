@@ -20,9 +20,9 @@ export default function AdminSettingsPage() {
   const [error, setError] = useState("");
 
   const [settings, setSettings] = useState({
-    store_name: "MAISON ÉLÉGANCE",
+    store_name: "LuxeMart",
     store_tagline: "Timeless Haute Couture & Modern Luxury",
-    whatsapp_number: "919876543210",
+    whatsapp_number: "918451812014",
     currency_symbol: "₹",
     greeting_template: "Assalamualaikum, I would like to place an order for the following item:",
     meta_phone_id: "",

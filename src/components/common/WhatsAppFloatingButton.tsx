@@ -3,8 +3,10 @@
 import React, { useState, useEffect } from "react";
 import { MessageCircle, X } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { useSettings } from "@/lib/settings-context";
 
 export default function WhatsAppFloatingButton() {
+  const { whatsapp_number } = useSettings();
   const pathname = usePathname();
   const [visible, setVisible] = useState(false);
   const [tooltipDismissed, setTooltipDismissed] = useState(false);
@@ -20,7 +22,7 @@ export default function WhatsAppFloatingButton() {
     return null;
   }
 
-  const phone = process.env.NEXT_PUBLIC_DEFAULT_WHATSAPP || "919876543210";
+  const phone = whatsapp_number || process.env.NEXT_PUBLIC_DEFAULT_WHATSAPP || "918451812014";
   const defaultMessage = encodeURIComponent(
     "Assalamualaikum, I am visiting your catalogue and need styling advice / order assistance."
   );
