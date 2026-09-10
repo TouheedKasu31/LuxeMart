@@ -47,6 +47,11 @@ export async function PUT(req: Request) {
       "greeting_template",
       "meta_phone_id",
       "meta_access_token",
+      "hero_title",
+      "hero_subtitle",
+      "hero_image_main",
+      "hero_image_watches",
+      "hero_image_shoes",
     ];
 
     for (const [key, value] of Object.entries(body)) {

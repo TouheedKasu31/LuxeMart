@@ -15,6 +15,7 @@ import {
   ShieldCheck,
   Mail,
   User,
+  Sparkles,
 } from "lucide-react";
 
 export default function AdminSettingsPage() {
@@ -41,6 +42,11 @@ export default function AdminSettingsPage() {
     greeting_template: "Assalamualaikum, I would like to place an order for the following item:",
     meta_phone_id: "",
     meta_access_token: "",
+    hero_title: "",
+    hero_subtitle: "",
+    hero_image_main: "",
+    hero_image_watches: "",
+    hero_image_shoes: "",
   });
 
   const handleAdminAccountSubmit = async (e: React.FormEvent) => {
@@ -268,6 +274,96 @@ export default function AdminSettingsPage() {
               placeholder="Assalamualaikum, I would like to place an order for the following item:"
               className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-black"
             />
+          </div>
+        </div>
+
+        {/* Homepage Hero & Showcase Customization */}
+        <div className="bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm space-y-5">
+          <div className="flex items-center justify-between border-b border-neutral-100 pb-3">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-amber-600" />
+              <h2 className="text-sm font-bold uppercase tracking-wider text-black">
+                Homepage Hero Showcase (Full Store Representation)
+              </h2>
+            </div>
+            <span className="text-[10px] bg-amber-50 text-amber-800 border border-amber-200 font-semibold px-2 py-0.5 rounded">
+              Men • Women • Watches • Shoes
+            </span>
+          </div>
+
+          <p className="text-xs text-neutral-500 leading-relaxed">
+            Customize the images and headlines at the top of your homepage. Leave fields blank to use curated, high-resolution lifestyle defaults.
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
+                Hero Headline (Leave blank for default)
+              </label>
+              <input
+                type="text"
+                value={settings.hero_title}
+                onChange={(e) => handleChange("hero_title", e.target.value)}
+                placeholder="e.g. Men, Women, Watches & Footwear."
+                className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-black"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
+                Hero Subtitle Description
+              </label>
+              <input
+                type="text"
+                value={settings.hero_subtitle}
+                onChange={(e) => handleChange("hero_subtitle", e.target.value)}
+                placeholder="Your one-stop fashion store..."
+                className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-black"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-4 pt-2">
+            <div>
+              <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
+                Main Showcase Image URL (Men & Women Fashion)
+              </label>
+              <input
+                type="url"
+                value={settings.hero_image_main}
+                onChange={(e) => handleChange("hero_image_main", e.target.value)}
+                placeholder="https://images.unsplash.com/photo-... (Leave blank for curated default)"
+                className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs font-mono focus:outline-none focus:ring-1 focus:ring-black"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
+                  Watches & Accessories Image URL
+                </label>
+                <input
+                  type="url"
+                  value={settings.hero_image_watches}
+                  onChange={(e) => handleChange("hero_image_watches", e.target.value)}
+                  placeholder="https://images.unsplash.com/... (Watches showcase)"
+                  className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs font-mono focus:outline-none focus:ring-1 focus:ring-black"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
+                  Footwear & Shoes Image URL
+                </label>
+                <input
+                  type="url"
+                  value={settings.hero_image_shoes}
+                  onChange={(e) => handleChange("hero_image_shoes", e.target.value)}
+                  placeholder="https://images.unsplash.com/... (Shoes showcase)"
+                  className="w-full px-3.5 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs font-mono focus:outline-none focus:ring-1 focus:ring-black"
+                />
+              </div>
+            </div>
           </div>
         </div>
 
