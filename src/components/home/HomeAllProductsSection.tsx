@@ -40,13 +40,13 @@ export default function HomeAllProductsSection() {
         <div className="text-center max-w-2xl mx-auto mb-12">
           <div className="inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.25em] text-neutral-400 font-semibold mb-2">
             <LayoutGrid className="w-3.5 h-3.5" />
-            <span>Complete Wardrobe</span>
+            <span>Complete Collection</span>
           </div>
           <h2 className="font-serif-luxury text-3xl sm:text-4xl text-neutral-900 font-normal">
-            The Haute Catalogue
+            Our Latest Products
           </h2>
           <p className="text-sm text-neutral-500 mt-2 font-light">
-            Every garment is tailored to precision. Pick any item to inspect fabric composition, size variants, or order directly with our boutique stylists on WhatsApp.
+            Every piece is crafted with premium quality materials. Choose your favorite item and order directly on WhatsApp with fast doorstep delivery.
           </p>
         </div>
 
@@ -62,7 +62,7 @@ export default function HomeAllProductsSection() {
             href="/shop"
             className="inline-flex items-center gap-3 px-8 py-4 bg-neutral-900 hover:bg-black text-white text-xs font-semibold tracking-widest uppercase rounded-md shadow-md transition-all active:scale-95"
           >
-            <span>Open Filterable Catalogue</span>
+            <span>View All Products</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

@@ -127,7 +127,7 @@ export default function Navbar() {
                   {store_name}
                 </span>
                 <span className="block text-[9px] sm:text-[10px] tracking-[0.3em] uppercase text-neutral-400 font-light -mt-1 text-center">
-                  HAUTE COUTURE
+                  PREMIUM STORE
                 </span>
               </Link>
             </div>

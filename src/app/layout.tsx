@@ -20,25 +20,25 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    default: "MAISON ÉLÉGANCE | Luxury Fashion Catalogue & WhatsApp Boutique",
-    template: "%s | MAISON ÉLÉGANCE",
+    default: "LuxeMart | Premium Fashion Store & WhatsApp Boutique",
+    template: "%s | LuxeMart",
   },
   description:
-    "Explore our handcrafted fashion catalogue of luxury oversized shirts, linen kurtas, tailored blazers, and modest abayas. Instant direct ordering via WhatsApp.",
+    "Explore our collection of premium oversized shirts, pure linen kurtas, tailored blazers, and modest wear. Quick and easy direct ordering via WhatsApp.",
   keywords: [
-    "fashion catalogue",
-    "luxury shirts",
-    "embroidered kurtas",
+    "clothing store",
+    "premium shirts",
+    "linen kurtas",
     "abaya modest wear",
     "whatsapp clothing store",
     "menswear",
-    "couture",
+    "fashion",
   ],
   openGraph: {
-    title: "MAISON ÉLÉGANCE | Luxury Fashion Catalogue",
+    title: "LuxeMart | Premium Fashion Store",
     description:
-      "Explore handcrafted luxury apparel. Browse catalogue and order directly on WhatsApp.",
-    siteName: "MAISON ÉLÉGANCE",
+      "Explore quality apparel. Browse our collection and order directly on WhatsApp.",
+    siteName: "LuxeMart",
     images: [
       {
         url: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=1200&q=80",

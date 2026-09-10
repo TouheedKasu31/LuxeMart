@@ -31,7 +31,7 @@ export default function CategoriesPage() {
             Fashion Categories & Collections
           </h1>
           <p className="text-sm text-neutral-500 max-w-xl mx-auto mt-2 font-light">
-            Browse our curated classifications, each engineered for distinct styles, occasions, and seasonal silhouettes.
+            Explore our collections by category, designed for everyday comfort, festive occasions, and formal wear.
           </p>
         </div>
       </div>

@@ -16,16 +16,16 @@ export default function HeroSection() {
           <div className="lg:col-span-6 space-y-6 sm:space-y-8 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-neutral-100 border border-neutral-200 text-xs font-medium text-neutral-800 tracking-wide uppercase">
               <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-              <span>Autumn / Winter 2025 Haute Edition</span>
+              <span>New Season Collection</span>
             </div>
 
             <div className="space-y-3">
               <h1 className="font-serif-luxury text-4xl sm:text-5xl lg:text-6xl tracking-tight text-neutral-900 font-normal leading-[1.15]">
-                Timeless Modern Silhouettes, <br />
-                <span className="italic font-light text-neutral-600">Pure Craftsmanship.</span>
+                Modern Styles, <br />
+                <span className="italic font-light text-neutral-600">Premium Everyday Quality.</span>
               </h1>
               <p className="text-sm sm:text-base text-neutral-600 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light">
-                Discover our curated catalogue of luxury oversized shirts, bespoke Belgian linen kurtas, sculpted blazers, and modest attire. Select your fit and order seamlessly directly on WhatsApp.
+                Explore our collection of stylish oversized shirts, pure linen kurtas, sharp blazers, and elegant modest wear. Select your size and order directly on WhatsApp.
               </p>
             </div>
 
@@ -41,7 +41,7 @@ export default function HeroSection() {
 
               <a
                 href={`https://wa.me/${whatsapp_number || "918451812014"}?text=${encodeURIComponent(
-                  "Assalamualaikum! I'd like to consult with your stylist regarding available catalogue sizes and custom requests."
+                  "Assalamualaikum! I am browsing your collection and would like to place an order."
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -56,15 +56,15 @@ export default function HeroSection() {
             <div className="pt-6 border-t border-neutral-100 grid grid-cols-3 gap-4 text-center lg:text-left">
               <div>
                 <p className="text-xl sm:text-2xl font-serif-luxury font-bold text-neutral-900">100%</p>
-                <p className="text-[11px] text-neutral-500 uppercase tracking-wider mt-0.5">Organic Cottons</p>
+                <p className="text-[11px] text-neutral-500 uppercase tracking-wider mt-0.5">Quality Fabrics</p>
               </div>
               <div>
                 <p className="text-xl sm:text-2xl font-serif-luxury font-bold text-neutral-900">Direct</p>
-                <p className="text-[11px] text-neutral-500 uppercase tracking-wider mt-0.5">WhatsApp Concierge</p>
+                <p className="text-[11px] text-neutral-500 uppercase tracking-wider mt-0.5">WhatsApp Order</p>
               </div>
               <div>
                 <p className="text-xl sm:text-2xl font-serif-luxury font-bold text-neutral-900">Fast</p>
-                <p className="text-[11px] text-neutral-500 uppercase tracking-wider mt-0.5">Priority Dispatch</p>
+                <p className="text-[11px] text-neutral-500 uppercase tracking-wider mt-0.5">Priority Delivery</p>
               </div>
             </div>
           </div>
@@ -85,7 +85,7 @@ export default function HeroSection() {
                   <span className="text-[10px] uppercase tracking-widest font-semibold bg-white/20 backdrop-blur-md px-2 py-0.5 rounded">
                     Featured Edit
                   </span>
-                  <p className="text-sm font-medium mt-1">Oversized Poplin Silhouette</p>
+                  <p className="text-sm font-medium mt-1">Premium Oversized Shirts</p>
                 </div>
               </div>
 

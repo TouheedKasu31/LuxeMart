@@ -28,7 +28,7 @@ export default function Footer() {
               How WhatsApp Ordering Works
             </h3>
             <p className="text-sm text-neutral-500 mt-2">
-              Skip carts, accounts, and complicated checkouts. Order directly with our boutique stylists.
+              Skip long forms and checkout carts. Order your favorite items directly via WhatsApp in just 1 click.
             </p>
           </div>
 
@@ -85,7 +85,7 @@ export default function Footer() {
               {store_name}
             </span>
             <p className="text-xs leading-relaxed text-neutral-500">
-              Timeless fashion catalogue showcasing refined tailoring, contemporary oversized shirts, luxury linens, and modest abayas.
+              Your destination for premium quality shirts, pure linen kurtas, tailored blazers, and modest wear. Simple 1-click WhatsApp ordering.
             </p>
             <div className="pt-2">
               <a

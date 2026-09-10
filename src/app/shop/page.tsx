@@ -98,10 +98,10 @@ function ShopContent() {
             The Complete Collection
           </span>
           <h1 className="font-serif-luxury text-3xl sm:text-4xl lg:text-5xl text-neutral-900 font-normal mt-2">
-            Haute Couture Catalogue
+            All Products & Collections
           </h1>
           <p className="text-sm text-neutral-500 max-w-xl mx-auto mt-2 font-light">
-            Filter by cut, fabric, size, and pricing. Every product connects directly to WhatsApp order concierge.
+            Filter by category, size, and price. Select your style and order directly on WhatsApp.
           </p>
 
           {/* Search bar inside header */}

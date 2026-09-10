@@ -40,7 +40,7 @@ export default function WhatsAppFloatingButton() {
           </button>
           <p className="font-semibold text-neutral-900 mb-0.5">Need styling help?</p>
           <p className="text-[11px] text-neutral-500 leading-tight">
-            Chat directly with our concierge on WhatsApp!
+            Chat directly with us on WhatsApp for fast orders!
           </p>
         </div>
       )}
